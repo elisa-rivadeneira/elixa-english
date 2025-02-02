@@ -21,6 +21,7 @@ lib/config.dart
 lib/main_botones_chagtpt.dart
 lib/main_correccion_ingles.dart
 lib/main_reconocimiento_voz.dart
+lib/main_reconocimiento_voz.dart
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -47,3 +48,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+lib/main_Elixa_english.dart
+lib/main_mal_perotienevozdegoogle.dart
+lib/main_with_voice_openai.dart

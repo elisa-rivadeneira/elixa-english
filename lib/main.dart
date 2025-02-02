@@ -7,7 +7,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'config.dart';
 import 'colors.dart';
 import 'package:video_player/video_player.dart';
+import 'package:audioplayers/audioplayers.dart';
 
+final AudioPlayer _audioPlayer = AudioPlayer();
 
 class CustomColors {
   static const Color pinkFuchsia = Color.fromARGB(255, 184, 0, 101);
@@ -23,7 +25,12 @@ List<Map<String, String>> chatHistory = [
   {
     "role": "system",
     "content":
-"""Actúa como Elixa English Tutor, un tutor de inglés amigable, didáctico y proactivo, diseñado para ayudar al estudiante a alcanzar la fluidez rápidamente. Tu objetivo es motivar al estudiante, mantenerlo practicando activamente y hacer que la experiencia sea dinámica y emocionante. Sigue estas reglas estrictamente:
+//"""Actúa como un tutor de inglés amigable, didáctico y proactivo, diseñado para ayudar al estudiante a alcanzar la fluidez rápidamente. Tu objetivo es motivar al estudiante, mantenerlo practicando activamente y hacer que la experiencia sea dinámica y emocionante.
+        """Eres un entrenador de inglés de  Elixa English Tutor,diseñado para ayudar a los usuarios a mejorar su comunicación de manera natural y fluida. 
+Actúa como una persona nativa con paciencia, que conversa sin hacer que el usuario repita frases, sino guiándolo de forma amena y comprensible. 
+Usa un lenguaje claro y adaptado al nivel del usuario. Corrige errores sutilmente dentro de la conversación, sin interrumpir el flujo natural. 
+Haz preguntas para mantener la charla y motiva al usuario a expresarse con confianza. Tu tono es amigable, relajado y motivador.
+Sigue estas reglas estrictamente:
 
 1. Refuérzale que practicando contigo logrará hablar inglés con confianza en situaciones reales.
 2. Usa un tono motivador y entusiasta con frases como: "You're doing amazing!", "Keep it up!", "I'm so proud of your progress!".
@@ -32,25 +39,27 @@ List<Map<String, String>> chatHistory = [
 5. Felicita después de cada corrección exitosa y continúa con un nuevo tema o pregunta: "Excellent work! Now, let's talk about your hobbies. What do you like to do in your free time?".
 6. Nunca dejes largas pausas ni hagas preguntas abiertas. Guía la conversación para mantener fluidez e interés.
 7. Introduce ejercicios variados, como completar frases, describir imágenes o practicar situaciones reales: "Imagine you're ordering coffee at a café. What would you say?".
-8. Repite las correcciones hasta un máximo de tres veces y utiliza ejemplos prácticos. Si el estudiante no logra corregir, motívalo con frases como: "Don't worry! Practice makes perfect. Let's move on and try something new!".
-9. Proporciona desafíos progresivos con vocabulario avanzado o estructuras más complejas si el estudiante domina un tema.
-10. Nunca preguntes qué quiere practicar. Dirige tú la sesión introduciendo temas nuevos de forma natural.
-11. Recuérdale constantemente que practicar contigo es la mejor manera de mejorar: "The more you practice, the closer you are to speaking like a native!".
-12. Da instrucciones claras y evita respuestas largas o complejas para maximizar la práctica.
-13. Si el estudiante habla en español, corrígelo amablemente: "You mean, 'I want to learn English.' Great try! Repeat after me.".
-14. Varía los temas de conversación (saludos, hobbies, trabajo, viajes) y añade juegos como "completar frases" o "describir imágenes".
-15. Asegúrate de que la sesión sea entretenida y evita pausas incómodas. Mantén al estudiante entusiasmado.
-16. Evalúa las habilidades del estudiante y adapta preguntas y ejercicios según sus necesidades.
-17. Si detectas errores frecuentes, ofrece explicaciones breves y ejemplos prácticos. Pide que lo repita hasta tres veces antes de avanzar.
-18. Introduce nuevas palabras, frases o estructuras para retar al estudiante si notas fluidez en ciertos temas.
-19. Siempre habla en inglés y guía activamente la conversación. No permitas que el estudiante tome la iniciativa.
-20. Nunca preguntes si desea cambiar de tema; continúa con preguntas o ejercicios relacionados.
-21. Mantén el flujo de la conversación sin pausas ni despedidas prematuras. Solo termina si el estudiante se despide explícitamente.
-22. Al inicio de cada sesión, motiva al estudiante recordándole cuánto necesita practicar y cómo lograrás ayudarlo a mejorar rápidamente: "Welcome back! With consistent practice, you'll be speaking English fluently in no time. Let's begin!".
-23. Después de felicitar por una respuesta correcta, continúa inmediatamente con una nueva pregunta o actividad: "Great job! Let's try another one. Can you tell me about your favorite food?".
-34. Repite cada corrección hasta un máximo de tres veces y luego avanza al siguiente tema.
+8. Proporciona desafíos progresivos con vocabulario avanzado o estructuras más complejas si el estudiante domina un tema.
+9. Nunca preguntes qué quiere practicar. Dirige tú la sesión introduciendo temas nuevos de forma natural.
+10. Recuérdale constantemente que practicar contigo es la mejor manera de mejorar: "The more you practice, the closer you are to speaking like a native!".
+9. Da instrucciones claras y evita respuestas largas o complejas para maximizar la práctica.
+10. Si el estudiante habla en español, corrígelo amablemente con un tono de pregunta: "You mean, 'I want to learn English.'? Great try! Repeat after me.".
+11. Varía los temas de conversación (saludos, hobbies, trabajo, viajes) y añade juegos como "completar frases" o "describir imágenes".
+12. Asegúrate de que la sesión sea entretenida y evita pausas incómodas. Mantén al estudiante entusiasmado.
+13. Evalúa las habilidades del estudiante y adapta preguntas y ejercicios según sus necesidades.
+14. Si detectas errores frecuentes, ofrece explicaciones breves y ejemplos prácticos. Corrijelo de manera amena y conversacional.
+15. Introduce nuevas palabras, frases o estructuras para retar al estudiante si notas fluidez en ciertos temas.
+16. Siempre habla en inglés y guía activamente la conversación. No permitas que el estudiante tome la iniciativa.
+17. Nunca preguntes si desea cambiar de tema; continúa con preguntas o ejercicios relacionados.
+18. Mantén el flujo de la conversación sin pausas ni despedidas prematuras. Solo termina si el estudiante se despide explícitamente.
+19. Al inicio de cada sesión, motiva al estudiante recordándole cuánto necesita practicar y cómo lograrás ayudarlo a mejorar rápidamente: "Welcome back! With consistent practice, you'll be speaking English fluently in no time. Let's begin!".
+20. Después de felicitar por una respuesta correcta, continúa inmediatamente con una nueva pregunta o actividad: "Great job! Let's try another one. Can you tell me about your favorite food?".
+20. Cuando hagas una correccion en ingles, dile, You mean "...Frase correcta..." o algo parecido como cuando alguien esta en otro pais tratando de hablar con gente nativa.
+21. Si corriges no hagas otra pregunta, deja que el alumno se corrija.
+22. No te despidas sin que el alumno se despida primero, procura poner interesante la sesion.
+23. Haz la conversacion amena no corrijas tanto, solo corrije del tipo You mean 
+22. Da respuestas cortas de maximo 17 palabras.
 Recuerda: tu objetivo es ser un tutor motivador y proactivo, asegurando que el estudiante se sienta confiado y motivado. ¡Hazlo divertido y emocionante!"""
-
   }
 ];
 
@@ -151,47 +160,32 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   late FlutterTts _flutterTts;
+  late VideoPlayerController _controller;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState(); // Llama a la implementación base de initState
+    _controller = VideoPlayerController.asset('assets/vida2.mp4')
+      ..initialize().then((_) {
+        _controller.setLooping(true);
+        _controller.play();
+        setState(() {});
+      });
     _initTts(); // Llama a tu método de inicialización del TTS
   }
 
   void _initTts() async {
-    _flutterTts = FlutterTts();
+    print("Inicializando TTS con OpenAI...");
+    await _speak(
+        "Practicing with Elixa Tutor English will help you speak English fluently in no time! Let's get started");
 
-    try {
-// Configura el idioma a inglés (EE.UU.)
-      await _flutterTts.setLanguage("en-US");
 
-// Verifica las voces disponibles
-      List<dynamic> voices = await _flutterTts.getVoices;
-      print("Voces disponibles al principio: $voices");
-
-// Verifica si la voz 'en-us-x-tpf-local' está disponible
-      if (voices.any((voice) => voice['name'] == 'en-us-x-tpf-local')) {
-        await _flutterTts
-            .setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
-        print(" Si esta con La voz 'en-us-x-tpf-local'");
-        _flutterTts.speak(
-            "Practicing with Elixa Tutor English will help you speak English fluently in no time! Let's get started"); // Añadir una frase simple para probar
-      } else {
-        print("La voz 'en-us-x-tpf-local' no está disponible.");
-      }
-
-// Configura los parámetros de la voz
-      await _flutterTts.setSpeechRate(1.0); // Velocidad normal
-      await _flutterTts.setPitch(1.0); // Tono normal
-      await _flutterTts.setVolume(1.0); // Volumen máximo
-
-// Si quieres forzar el motor de Google TTS
-      await _flutterTts.setEngine("com.google.android.tts");
-
-      print("El idioma inglés está disponible.");
-    } catch (e) {
-      print("El idioma inglés no está disponible.");
-    }
   }
 
   final stt.SpeechToText _speech = stt.SpeechToText();
@@ -201,9 +195,26 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _isListening = false;
   bool _isBotSpeaking = false;
 
+  Future<void> processAndSpeakResponse(
+      String userText, Future<String> Function(String) sendToOpenAI) async {
+    if (userText.isNotEmpty) {
+      String chatGptResponse = await sendToOpenAI(userText);
+      print("Respuesta de OpenAI: $chatGptResponse");
+      await _speak(chatGptResponse);
+    }
+  }
+
+  Future<void> handleSpeechRecognition(String recognizedText,
+      Future<String> Function(String) sendToOpenAI) async {
+    if (recognizedText.isNotEmpty) {
+      print("Texto reconocido: $recognizedText");
+      await processAndSpeakResponse(recognizedText, sendToOpenAI);
+    }
+  }
+
 // Function to listen and process speech input
   void _listen() async {
-          _isBotSpeaking = false;
+    _isBotSpeaking = false;
 
     if (!_isListening) {
       bool available = await _speech.initialize(
@@ -234,33 +245,14 @@ class _ChatScreenState extends State<ChatScreen> {
           });
 
           if (!_speech.isListening) {
-// Send recognized text to OpenAI and process the response
+            // Send recognized text to OpenAI and process the response
             String chatGptResponse = await sendToOpenAI(_text);
             setState(() {
               _response = chatGptResponse;
             });
 
-// Verifica las voces disponibles
-            List<dynamic> voices = await _flutterTts.getVoices;
-            print("Voces disponibles: $voices");
-
-// Verifica si la voz 'en-us-x-tpf-local' está disponible
-            if (voices.any((voice) => voice['name'] == 'en-us-x-tpf-local')) {
-// Establece la voz seleccionada
-              await _flutterTts
-                  .setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
-              print("Usando la voz 'en-us-x-tpf-local'");
-            } else {
-              print("La voz 'en-us-x-tpf-local' no está disponible.");
-            }
-
-// Asegúrate de que los parámetros de voz están configurados correctamente
-            await _flutterTts.setSpeechRate(0.5); // Velocidad normal
-            await _flutterTts.setPitch(1.0); // Tono normal
-            await _flutterTts.setVolume(1.0); // Volumen máximo
-
-// Read the response aloud
-            await _flutterTts.speak(chatGptResponse);
+            // Read the response aloud
+            await _speak(chatGptResponse);
 
             print(
                 "'********************************************************************'");
@@ -281,35 +273,37 @@ class _ChatScreenState extends State<ChatScreen> {
 
 // Convertir texto a voz
 
-  void _speak(String text) async {
-    print("En funcion speaaaaaaaaaaaaaaaaaaaaaaaaak");
+//api key hailuo eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJHcm91cE5hbWUiOiJFbGlzYSBSaXZhZGVuZWlyYSIsIlVzZXJOYW1lIjoiRWxpc2EgUml2YWRlbmVpcmEiLCJBY2NvdW50IjoiIiwiU3ViamVjdElEIjoiMTg4MzE3MjYxODgwNzI4NDA4MSIsIlBob25lIjoiIiwiR3JvdXBJRCI6IjE4ODMxNzI2MTg4MDMwODk3NzciLCJQYWdlTmFtZSI6IiIsIk1haWwiOiJlcml2YWRlbmVpcmFxQGdtYWlsLmNvbSIsIkNyZWF0ZVRpbWUiOiIyMDI1LTAyLTAyIDAwOjU0OjMxIiwiVG9rZW5UeXBlIjoxLCJpc3MiOiJtaW5pbWF4In0.U_QOpmfBfMQNgasyFaXjSS8UWnAunTlS_8VVg4H5T_42Q5vWNNMd4A_-fjwoOtrU9gmxvFRw3rjeiNVoN3riRmWpfBeLO5I2RRkNGZZv-fr6aVc1CgbU3L_B83QAMJFVS0pFso_kOYMjy_gUclAfQLcrbHFrUJrytW14Z828WmqUD8pIhPUoVInBqHEg3XajqcHK2pulDP3JZmKoZz15fH1nmAncSdRU89947fXCcsrjfR-AxSDscvXbRFBUGsrMVEsrU8_jgHUX7yVXtq120WcFnOT9c3YpllFWooQ8KdGM-ZQMXCPI6F0eUOiISNgVdOI0R3iZR3y49JBTbYGrQg
+  Future<void> _speak(String text) async {
+    final String apiUrl = "https://api.openai.com/v1/audio/speech";
 
-// Verifica las voces disponibles
-    List<dynamic> voices = await _flutterTts.getVoices;
-    print("Voces disponibles: $voices");
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $openAiApiKey',
+        },
+        body: json.encode({
+          'model': 'tts-1',
+          'voice': 'nova', // Puedes cambiar a "echo", "nova", etc.
+          'input': text,
+        }),
+      );
 
-// Verifica si la voz 'en-us-x-tpf-local' está disponible
-    if (voices.any((voice) => voice['name'] == 'en-us-x-tpf-local')) {
-// Establece la voz seleccionada
-      await _flutterTts
-          .setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
-      print("Usando la voz 'en-us-x-tpf-local'");
-    } else {
-      print("La voz 'en-us-x-tpf-local' no está disponible.");
+      if (response.statusCode == 200) {
+        final bytes = response.bodyBytes;
+        final String audioUrl = 'data:audio/mpeg;base64,${base64Encode(bytes)}';
+        await _audioPlayer.play(UrlSource(audioUrl));
+      } else {
+        print("Error al obtener el audio: ${response.body}");
+      }
+    } catch (e) {
+      print("Error en la solicitud TTS: $e");
     }
-
-// Asegúrate de que los parámetros de voz están configurados correctamente
-    await _flutterTts.setSpeechRate(1.0); // Velocidad normal
-    await _flutterTts.setPitch(1.0); // Tono normal
-    await _flutterTts.setVolume(1.0); // Volumen máximo
-
-// Hablar el texto
-    await _flutterTts.speak(text);
   }
 
-
-
-    void _simulateBotResponse() {
+  void _simulateBotResponse() {
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
         _isBotSpeaking = true;
@@ -319,97 +313,90 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Elixa English"),
         backgroundColor: CustomColors.pinkFuchsia,
       ),
-      body: Container(
-        // Fondo con degradado
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              CustomColors.blueGradientStart,
-              CustomColors.blueGradientEnd,
-            ],
+      body: Stack(
+        children: [
+          // Video de fondo
+          Positioned.fill(
+            child: _controller.value.isInitialized
+                ? VideoPlayer(_controller)
+                : Center(child: CircularProgressIndicator()),
           ),
-          image: DecorationImage(
-            image: AssetImage('assets/flowers_background.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                _text,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 54, 0, 61),
+
+          // Contenido principal
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  _text,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 182, 8, 109),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              GestureDetector(
-                onTap: _listen,
-                child: Stack(
-                  alignment: Alignment.center, // Centrar el contenido del Stack
-                  children: [
-                    // Círculo animado
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: _isListening
-                            ? Colors.greenAccent
-                            : (_isBotSpeaking
-                                ? Colors.orangeAccent
-                                : Colors.blueAccent),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: _isListening
-                                ? Colors.green
-                                : (_isBotSpeaking
-                                    ? Colors.orange
-                                    : Colors.blue),
-                            blurRadius: 15,
-                            spreadRadius: 5,
-                          ),
-                        ],
+                SizedBox(height: 20),
+                GestureDetector(
+                  onTap: _listen,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 500),
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: _isListening
+                              ? Colors.greenAccent
+                              : (_isBotSpeaking
+                                  ? Colors.orangeAccent
+                                  : Colors.blueAccent),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: _isListening
+                                  ? Colors.green
+                                  : (_isBotSpeaking
+                                      ? Colors.orange
+                                      : Colors.blue),
+                              blurRadius: 15,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    // Ícono de micrófono
-                    Icon(
-                      _isListening ? Icons.mic : Icons.mic_off,
-                      size: 50,
-                      color: const Color.fromARGB(255, 234, 242, 255),
-                    ),
-                  ],
+                      Icon(
+                        _isListening ? Icons.mic : Icons.mic_off,
+                        size: 50,
+                        color: const Color.fromARGB(255, 234, 242, 255),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                _response,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontStyle: FontStyle.italic,
-                  color: const Color.fromARGB(255, 1, 167, 23),
+                SizedBox(height: 20),
+                Text(
+                  _response,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontStyle: FontStyle.italic,
+                    color: const Color.fromARGB(255, 212, 7, 76),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
