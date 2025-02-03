@@ -142,6 +142,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ChatGPT Voice Interaction',
+//      home: LoadingScreen(), // Pantalla de inicio
       home: ChatScreen(),
       theme: ThemeData(
         primaryColor: CustomColors.pinkFuchsia,
@@ -150,6 +151,29 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class LoadingScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          width: 150,  // Ajusta el tamaño del contenedor
+          height: 150,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,  // Esto hace que el contenedor sea un círculo
+          ),
+          child: Image.asset(
+            'assets/icon/elixa_english.png',
+            fit: BoxFit.cover,  // Esto asegura que la imagen ocupe todo el círculo
+          ),
+        ),
+      ),
+    );
+  }
+  }
+
+  
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
