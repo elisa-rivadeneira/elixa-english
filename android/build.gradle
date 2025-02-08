@@ -1,7 +1,37 @@
+buildscript {
+    ext.kotlin_version = '1.9.24' // Actualiza la versión de Kotlin a 2.1.0
+    repositories {
+        google()
+        mavenCentral()
+        maven { // Add this block
+            url 'https://maven.google.com'
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.2' // Asegúrate de que esta versión sea compatible
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.15' // Or latest
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2' // Or latest version
+
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == "org.jetbrains.kotlin") {
+                details.useVersion "1.9.24"
+            }
+        }
+    }
+
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { // Add this block also in allprojects
+            url 'https://maven.google.com'
+        }
     }
 }
 

@@ -4,12 +4,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Opcional: para asegurar que la app pueda acceder al micrófono en dispositivos más recientes -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-
-
     <application
-        android:label="Elixa English"
+        android:label="elixa_english"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.gms.auth.api.signin.elixa-a8af0"
+            android:value="275111028761-ii8fmel3qi7m62ei88lt7j2oltvc3ts8.apps.googleusercontent.com"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

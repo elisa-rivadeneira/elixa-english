@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "275111028761",
+    "project_id": "elixa-a8af0",
+    "storage_bucket": "elixa-a8af0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275111028761:android:b3d964ff1cd73e9072e288",
+        "android_client_info": {
+          "package_name": "com.example.elixa_english"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhaVcEcuLJ6Fk58Osxn_cb2DlH3O7IUFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275111028761:android:efdd58bf3319df0c72e288",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhaVcEcuLJ6Fk58Osxn_cb2DlH3O7IUFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
